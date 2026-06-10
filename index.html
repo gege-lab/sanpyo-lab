@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3表ラボ - P/L B/S C/F 学習ツール</title>
+    <meta name="theme-color" content="#0f6b8a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="3表ラボ" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <p class="eyebrow">Financial statements workbook</p>
+        <h1>3表ラボ</h1>
+      </div>
+      <div class="progress" aria-label="学習進捗">
+        <span id="progressLabel">0/5 完了</span>
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <nav class="side-nav" aria-label="学習メニュー">
+        <button class="nav-button active" data-section="simulator">3表シミュレーター</button>
+        <button class="nav-button" data-section="iphone">iPhoneで使う</button>
+        <button class="nav-button" data-section="bookkeeping">簿記3級</button>
+        <button class="nav-button" data-section="map">基礎マップ</button>
+        <button class="nav-button" data-section="transactions">取引カード</button>
+        <button class="nav-button" data-section="cases">ケース演習</button>
+        <button class="nav-button" data-section="quiz">クイズ</button>
+        <button class="nav-button" data-section="glossary">用語</button>
+      </nav>
+
+      <main class="content">
+        <section id="simulator" class="lesson-section active" aria-labelledby="simulatorTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Numbers to statements</p>
+              <h2 id="simulatorTitle">数字を動かして3表を読む</h2>
+            </div>
+            <div class="preset-row" aria-label="ケース選択">
+              <button class="preset-button" data-preset="steady">堅実黒字</button>
+              <button class="preset-button" data-preset="cashCrunch">黒字資金難</button>
+              <button class="preset-button" data-preset="turnaround">赤字改善中</button>
+              <button class="preset-button" data-preset="investment">大型投資</button>
+            </div>
+          </div>
+
+          <div class="sim-grid">
+            <section class="tool-panel controls-panel" aria-labelledby="controlsTitle">
+              <div class="panel-title-row">
+                <h3 id="controlsTitle">前提</h3>
+                <button id="resetButton" class="text-button">初期値</button>
+              </div>
+              <div id="controls" class="controls"></div>
+            </section>
+
+            <section class="tool-panel summary-panel" aria-labelledby="summaryTitle">
+              <div class="panel-title-row">
+                <h3 id="summaryTitle">読み取り</h3>
+                <span id="scenarioName" class="status-pill">堅実黒字</span>
+              </div>
+              <div id="headlineMetrics" class="metric-grid"></div>
+              <div id="insightList" class="insights"></div>
+              <div class="ratio-strip" id="ratioStrip"></div>
+            </section>
+          </div>
+
+          <div class="statement-grid">
+            <section class="statement-panel pl" aria-labelledby="plTitle">
+              <div class="statement-title">
+                <h3 id="plTitle">P/L 損益計算書</h3>
+                <span>儲け</span>
+              </div>
+              <table>
+                <tbody id="plTable"></tbody>
+              </table>
+            </section>
+
+            <section class="statement-panel bs" aria-labelledby="bsTitle">
+              <div class="statement-title">
+                <h3 id="bsTitle">B/S 貸借対照表</h3>
+                <span>財産</span>
+              </div>
+              <table>
+                <tbody id="bsTable"></tbody>
+              </table>
+            </section>
+
+            <section class="statement-panel cf" aria-labelledby="cfTitle">
+              <div class="statement-title">
+                <h3 id="cfTitle">C/F キャッシュフロー計算書</h3>
+                <span>現金</span>
+              </div>
+              <table>
+                <tbody id="cfTable"></tbody>
+              </table>
+            </section>
+          </div>
+
+          <section class="tool-panel visual-panel" aria-labelledby="visualTitle">
+            <div class="panel-title-row">
+              <h3 id="visualTitle">利益と現金のずれ</h3>
+              <span id="cashGapLabel" class="quiet-label"></span>
+            </div>
+            <div id="barChart" class="bar-chart"></div>
+          </section>
+
+          <button class="complete-button" data-complete="simulator">このステップを完了</button>
+        </section>
+
+        <section id="iphone" class="lesson-section" aria-labelledby="iphoneTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Use on iPhone</p>
+              <h2 id="iphoneTitle">iPhoneで3表ラボを使う</h2>
+            </div>
+          </div>
+
+          <div class="iphone-grid">
+            <section class="tool-panel iphone-panel" aria-labelledby="iphoneStepsTitle">
+              <div class="panel-title-row">
+                <h3 id="iphoneStepsTitle">近くで使う</h3>
+                <span class="status-pill">同じWi-Fi</span>
+              </div>
+              <ol class="iphone-steps">
+                <li>MacとiPhoneを同じWi-Fiにつなぎます。</li>
+                <li>Macで <strong>start-iphone.command</strong> を開きます。</li>
+                <li>Terminalに出た <strong>http://192.168.x.x:4173/</strong> をiPhoneのSafariで開きます。</li>
+                <li>Safariの共有ボタンから <strong>ホーム画面に追加</strong> を選ぶと、アプリのように起動できます。</li>
+              </ol>
+            </section>
+
+            <section class="tool-panel iphone-panel" aria-labelledby="outsideTitle">
+              <div class="panel-title-row">
+                <h3 id="outsideTitle">外出先で使う</h3>
+                <span class="status-pill">HTTPS公開</span>
+              </div>
+              <ol class="iphone-steps">
+                <li>このフォルダをGitHub Pages、Netlify、Vercelなどに公開します。</li>
+                <li>公開された <strong>https://...</strong> のURLをiPhoneのSafariで開きます。</li>
+                <li>一度読み込むと、対応ブラウザでは基本ファイルが端末に保存されます。</li>
+                <li>ホーム画面に追加しておくと、外でもアプリのように開けます。</li>
+              </ol>
+            </section>
+
+            <section class="tool-panel iphone-panel" aria-labelledby="iphoneUrlTitle">
+              <div class="panel-title-row">
+                <h3 id="iphoneUrlTitle">今のURL</h3>
+                <span id="deviceMode" class="quiet-label">確認中</span>
+              </div>
+              <div class="url-box" id="currentUrl">読み込み中</div>
+              <p class="note-text">
+                iPhoneでは <strong>127.0.0.1</strong> はiPhone自身を指します。Macで表示されるWi-Fi内IPアドレスのURLを使います。
+              </p>
+            </section>
+
+            <section class="tool-panel iphone-panel" aria-labelledby="offlineTitle">
+              <div class="panel-title-row">
+                <h3 id="offlineTitle">オフライン準備</h3>
+                <span id="offlineStatus" class="quiet-label">確認中</span>
+              </div>
+              <p class="note-text">
+                オフライン保存は <strong>https://</strong> の公開URL、またはMac上の <strong>localhost</strong> で有効です。
+                Wi-Fi共有の <strong>http://192.168...</strong> ではiPhoneの制限で保存できない場合があります。
+              </p>
+            </section>
+          </div>
+
+          <section class="tool-panel iphone-panel" aria-labelledby="iphoneTroubleTitle">
+            <div class="panel-title-row">
+              <h3 id="iphoneTroubleTitle">つながらない時</h3>
+              <span class="quiet-label">確認</span>
+            </div>
+            <div class="iphone-check-grid">
+              <div>
+                <strong>Wi-Fi</strong>
+                <p>MacとiPhoneが同じネットワークにいるか確認します。</p>
+              </div>
+              <div>
+                <strong>URL</strong>
+                <p>iPhoneではMacのTerminalに出たURLを入力します。</p>
+              </div>
+              <div>
+                <strong>Mac</strong>
+                <p>学習中はMacのTerminalを開いたままにします。</p>
+              </div>
+            </div>
+          </section>
+
+          <button class="complete-button" data-complete="iphone">このステップを完了</button>
+        </section>
+
+        <section id="bookkeeping" class="lesson-section" aria-labelledby="bookkeepingTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Bookkeeping grade 3</p>
+              <h2 id="bookkeepingTitle">簿記3級の基本を仕訳から読む</h2>
+            </div>
+          </div>
+
+          <div class="bookkeeping-grid">
+            <article class="book-card">
+              <span>01</span>
+              <h3>仕訳</h3>
+              <p>取引を借方と貸方に分けて記録します。左右の金額は必ず一致します。</p>
+            </article>
+            <article class="book-card">
+              <span>02</span>
+              <h3>現金、預金</h3>
+              <p>現金、普通預金、当座預金など、支払いに使える資産を扱います。</p>
+            </article>
+            <article class="book-card">
+              <span>03</span>
+              <h3>売上、仕入</h3>
+              <p>商品を売ると売上、商品を買うと仕入です。商売の中心になる勘定です。</p>
+            </article>
+            <article class="book-card">
+              <span>04</span>
+              <h3>費用、収益</h3>
+              <p>収益は利益を増やし、費用は利益を減らします。P/Lの材料になります。</p>
+            </article>
+            <article class="book-card">
+              <span>05</span>
+              <h3>売掛金、買掛金</h3>
+              <p>後で受け取る代金が売掛金、後で支払う代金が買掛金です。</p>
+            </article>
+            <article class="book-card">
+              <span>06</span>
+              <h3>決算</h3>
+              <p>期末に残高を整理し、利益を計算して、財産の状態をまとめます。</p>
+            </article>
+            <article class="book-card">
+              <span>07</span>
+              <h3>P/LとB/S</h3>
+              <p>収益と費用はP/Lへ、資産・負債・純資産はB/Sへ流れます。</p>
+            </article>
+          </div>
+
+          <div class="journal-workspace">
+            <section class="tool-panel journal-list-panel" aria-labelledby="journalListTitle">
+              <div class="panel-title-row">
+                <h3 id="journalListTitle">仕訳例題</h3>
+                <span class="quiet-label">左右一致</span>
+              </div>
+              <div id="journalCards" class="journal-card-list"></div>
+            </section>
+
+            <section class="tool-panel journal-detail" aria-live="polite">
+              <div class="panel-title-row">
+                <h3 id="journalTitle">商品を現金で売り上げた</h3>
+                <span id="journalTag" class="status-pill">売上</span>
+              </div>
+              <table class="journal-table" aria-label="仕訳">
+                <thead>
+                  <tr>
+                    <th>借方</th>
+                    <th>金額</th>
+                    <th>貸方</th>
+                    <th>金額</th>
+                  </tr>
+                </thead>
+                <tbody id="journalEntry"></tbody>
+              </table>
+              <div id="journalEffects" class="effect-list"></div>
+              <p id="journalNote" class="note-text"></p>
+            </section>
+          </div>
+
+          <section class="tool-panel closing-flow-panel" aria-labelledby="closingFlowTitle">
+            <div class="panel-title-row">
+              <h3 id="closingFlowTitle">決算でやること</h3>
+              <span class="quiet-label">期末整理</span>
+            </div>
+            <div class="closing-flow">
+              <div>
+                <strong>1. 残高を集める</strong>
+                <p>現金、預金、売掛金、買掛金、売上、仕入、費用などの残高を確認します。</p>
+              </div>
+              <div>
+                <strong>2. 決算整理をする</strong>
+                <p>未払費用、前払費用、減価償却、売上原価など、期末の調整を入れます。</p>
+              </div>
+              <div>
+                <strong>3. P/LとB/Sを作る</strong>
+                <p>収益と費用で利益を出し、資産・負債・純資産で財産の状態をまとめます。</p>
+              </div>
+            </div>
+          </section>
+
+          <button class="complete-button" data-complete="bookkeeping">このステップを完了</button>
+        </section>
+
+        <section id="map" class="lesson-section" aria-labelledby="mapTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Core map</p>
+              <h2 id="mapTitle">3表のつながり</h2>
+            </div>
+          </div>
+          <div class="map-grid">
+            <article class="concept-card pl">
+              <h3>P/L</h3>
+              <p>売上から費用を引いて、利益を見ます。</p>
+              <dl>
+                <dt>基本式</dt>
+                <dd>売上 - 費用 = 利益</dd>
+                <dt>見るポイント</dt>
+                <dd>粗利率、営業利益率、最終利益</dd>
+              </dl>
+            </article>
+            <article class="concept-card bs">
+              <h3>B/S</h3>
+              <p>資産、負債、純資産の状態を見ます。</p>
+              <dl>
+                <dt>基本式</dt>
+                <dd>資産 = 負債 + 純資産</dd>
+                <dt>見るポイント</dt>
+                <dd>現金、売掛金、借入金、自己資本比率</dd>
+              </dl>
+            </article>
+            <article class="concept-card cf">
+              <h3>C/F</h3>
+              <p>現金がどこで増減したかを見ます。</p>
+              <dl>
+                <dt>基本式</dt>
+                <dd>営業CF + 投資CF + 財務CF = 現金増減</dd>
+                <dt>見るポイント</dt>
+                <dd>営業CF、フリーCF、期末現金</dd>
+              </dl>
+            </article>
+          </div>
+
+          <div class="connection-board" aria-label="3表連動図">
+            <div class="connection-node pl">
+              <strong>P/L</strong>
+              <span>利益が出る</span>
+            </div>
+            <div class="connection-arrow">利益</div>
+            <div class="connection-node bs">
+              <strong>B/S</strong>
+              <span>純資産に積み上がる</span>
+            </div>
+            <div class="connection-arrow">現金差額</div>
+            <div class="connection-node cf">
+              <strong>C/F</strong>
+              <span>現金の増減を説明する</span>
+            </div>
+          </div>
+
+          <div class="reading-grid">
+            <article class="reading-card">
+              <h3>最初に見る順番</h3>
+              <ol>
+                <li>P/Lで利益が出ているかを見る。</li>
+                <li>C/Fで利益が現金になっているかを見る。</li>
+                <li>B/Sで資金繰りと借入の重さを見る。</li>
+              </ol>
+            </article>
+            <article class="reading-card">
+              <h3>よくある落とし穴</h3>
+              <p>売上が伸びても、売掛金や在庫が増えると現金は残りにくくなります。黒字倒産を避けるにはC/FとB/Sを合わせて見ます。</p>
+            </article>
+          </div>
+          <button class="complete-button" data-complete="map">このステップを完了</button>
+        </section>
+
+        <section id="transactions" class="lesson-section" aria-labelledby="transactionsTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Transaction cards</p>
+              <h2 id="transactionsTitle">取引が3表に出る場所</h2>
+            </div>
+          </div>
+          <div id="transactionCards" class="transaction-grid"></div>
+          <section class="tool-panel transaction-result" aria-live="polite">
+            <div class="panel-title-row">
+              <h3 id="transactionName">掛けで商品を売る</h3>
+              <span id="transactionTag" class="status-pill">売上</span>
+            </div>
+            <div id="transactionEffects" class="effect-list"></div>
+            <p id="transactionNote" class="note-text"></p>
+          </section>
+          <button class="complete-button" data-complete="transactions">このステップを完了</button>
+        </section>
+
+        <section id="cases" class="lesson-section" aria-labelledby="casesTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Case practice</p>
+              <h2 id="casesTitle">会社の状態を診断する</h2>
+            </div>
+          </div>
+          <div id="caseCards" class="case-grid"></div>
+          <section class="tool-panel case-detail" aria-live="polite">
+            <div class="panel-title-row">
+              <h3 id="caseTitle">堅実黒字メーカー</h3>
+              <button id="loadCaseButton" class="text-button">シミュレーターへ反映</button>
+            </div>
+            <p id="caseDescription"></p>
+            <div id="caseQuestions" class="question-list"></div>
+          </section>
+          <button class="complete-button" data-complete="cases">このステップを完了</button>
+        </section>
+
+        <section id="quiz" class="lesson-section" aria-labelledby="quizTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Quiz</p>
+              <h2 id="quizTitle">読み取りクイズ</h2>
+            </div>
+            <div class="quiz-score" id="quizScore">0 / 0</div>
+          </div>
+          <section class="tool-panel quiz-panel">
+            <p id="quizQuestion" class="quiz-question"></p>
+            <div id="quizOptions" class="quiz-options"></div>
+            <p id="quizFeedback" class="quiz-feedback" aria-live="polite"></p>
+            <div class="quiz-actions">
+              <button id="prevQuiz" class="text-button">前へ</button>
+              <button id="nextQuiz" class="text-button">次へ</button>
+            </div>
+          </section>
+          <button class="complete-button" data-complete="quiz">このステップを完了</button>
+        </section>
+
+        <section id="glossary" class="lesson-section" aria-labelledby="glossaryTitle">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Glossary</p>
+              <h2 id="glossaryTitle">用語を確認する</h2>
+            </div>
+            <input id="glossarySearch" class="search-input" type="search" placeholder="例: 売掛金、営業CF" />
+          </div>
+          <div id="glossaryList" class="glossary-list"></div>
+          <button class="complete-button" data-complete="glossary">このステップを完了</button>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
